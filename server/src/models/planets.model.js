@@ -3,7 +3,6 @@ const path = require('path');
 const { parse } = require('csv-parse');
 
 const habitablePlanets = [];
-const habitablePlanets2 = [];
 
 function isHabitablePlanet(planet) {
   return planet['koi_disposition'] === 'CONFIRMED'
@@ -38,8 +37,11 @@ function loadPlanetsData() {
 }
 
 //console.log(habitablePlanets);
+function getAllPlanets() {
+  return habitablePlanets;
+}
 
 module.exports = {
   loadPlanetsData,
-  planets: habitablePlanets,
+  getAllPlanets,
 };
