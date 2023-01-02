@@ -1,45 +1,46 @@
-const { getAllLaunches, addNewLaunches } = require('../../models/launches.model');
+const {getAllLaunches, addNewLaunch, existsLaunchWithId, abortLaunchById} = require('../../models/launches.model')
 
-function httpGetAllLaunches(req, res) {
-    return res.status(200).json(getAllLaunches());
+function httpGetAllLaunches(req, res){
+    res.status(200).json(getAllLaunches());
 }
 
-function httpAddNewLaunches(req, res) {
+function httpAddNewLaunch(req, res){
     const launch = req.body;
 
-    if (!launch.rocket) {
-        return res.status(400).json({
-            error: 'Missing required rocket',
-        });
-    }
-    else if (!launch.mission) {
-        return res.status(400).json({
-            error: 'Missing required mission property',
-        });
-    }
-    else if (!launch.launchDate) {
-        return res.status(400).json({
-            error: 'Missing required launchDate',
-        });
-    }
-    else if (!launch.target) {
-        return res.status(400).json({
-            error: 'Missing required target',
-        });
-    }
+    // if(isNaN(launch.launchDate)){
+    //     return res.status(400).json({
+    //         error: 'Invalid launch date!',
+    //     });
+    // }
+
+    // if(!launch.mission || !launch.rocket || !launch.launchDate
+    //     || !launch.target){
+    //     return res.status(400).json({
+    //         error: 'Missing required launch property',
+    //     });
+    // }
 
     launch.launchDate = new Date(launch.launchDate);
-    if (isNaN(launch.launchDate)) {
-        return res.status(400).json({
-            error: 'Invalid launch date',
+
+    addNewLaunch(launch);
+    return res.status(201).json(launch);
+}
+
+function httpAbortLaunch(req, res){
+    const launchId = Number(req.params.id);
+
+    if(!existsLaunchWithId(launchId)){
+        return res.status(404).json({
+            error: 'Launch not found!',
         });
     }
 
-    addNewLaunches(launch);
-    return res.status(201).json(launch);
+    const aborted = abortLaunchById(launchId);
+    return res.status(200).json(aborted);
 }
 
 module.exports = {
     httpGetAllLaunches,
-    httpAddNewLaunches,
-};
+    httpAddNewLaunch,
+    httpAbortLaunch
+}
