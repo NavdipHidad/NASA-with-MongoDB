@@ -8,22 +8,22 @@ const launch = {
     rocket: "Explore IS1",
     launchDate: new Date('December 27, 2030'),
     target: "Kepler-442 b",
-    customer: ['NASA', 'ZTM'],
+    customers: ['NASA', 'ZTM'],
     upcoming: true,
     success: true,
 };
 
 launches.set(launch.flightNumber, launch);
 
-function getAllLaunches(){
+function getAllLaunches() {
     return Array.from(launches.values());
 }
 
-function existsLaunchWithId(launchId){
+function existsLaunchWithId(launchId) {
     return launches.has(launchId);
 }
 
-function addNewLaunch(launch){
+function addNewLaunch(launch) {
     latestFlightNumber++;
     launches.set(
         latestFlightNumber,
@@ -36,7 +36,7 @@ function addNewLaunch(launch){
     );
 }
 
-function abortLaunchById(launchId){
+function abortLaunchById(launchId) {
     const aborted = launches.get(launchId);
     aborted.upcoming = false;
     aborted.success = false;
