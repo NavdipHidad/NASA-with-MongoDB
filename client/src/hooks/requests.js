@@ -8,13 +8,13 @@ async function httpGetPlanets() {
 async function httpGetLaunches() {
   const response = await fetch(`${URL}/launches`);
   const fetchedLaunches = await response.json();
-  return fetchedLaunches.sort((a,b) => {
+  return fetchedLaunches.sort((a, b) => {
     return a.flightNumber - b.flightNumber
   });
 }
 
 async function httpSubmitLaunch(launch) {
-  try{
+  try {
     return await fetch(`${URL}/launches`, {
       method: "post",
       headers: {
@@ -22,21 +22,21 @@ async function httpSubmitLaunch(launch) {
       },
       body: JSON.stringify(launch),
     });
-  }catch(err){
-    return{
+  } catch (err) {
+    return {
       ok: false,
     };
   }
 }
 
 async function httpAbortLaunch(id) {
-  try{
-    await fetch(`${URL}/launches/${id}`, {
+  try {
+    return await fetch(`${URL}/launches/${id}`, {
       method: "delete",
     });
-  }catch(err){
+  } catch (err) {
     console.log(err);
-    return{
+    return {
       ok: false,
     };
   }

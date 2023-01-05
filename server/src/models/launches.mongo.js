@@ -5,6 +5,10 @@ const launchesSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    launchDate: {
+        type: Date,
+        required: true,
+    },
     mission: {
         type: String,
         required: true,
@@ -13,24 +17,20 @@ const launchesSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    laucnchDate: {
-        type: Date,
-        required: true,
-    },
     target: {
         type: String,
         required: true,
     },
-    customers: [String],
     upcoming: {
-        type: String,
+        type: Boolean,
         required: true,
     },
     success: {
-        type: String,
+        type: Boolean,
         required: true,
         default: true,
     },
+    customers: [String],
 });
 
 module.exports = mongoose.model('Launch', launchesSchema);
