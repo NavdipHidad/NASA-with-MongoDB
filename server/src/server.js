@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const app = require('./app');
 const { loadPlanetsData } = require('./models/planets.model');
+const { loadLaunchData } = require('./models/launches.model');
 
 const PORT = 8000;
 mongoose.set('strictQuery', true);
@@ -22,6 +23,7 @@ mongoose.connection.on('error', (err) => {
 async function startServer() {
     await mongoose.connect(MONGO_URL);
     await loadPlanetsData();
+    await loadLaunchData();
 
     server.listen(PORT, () => {
         console.log(`Listening on port ${PORT}... .`);
